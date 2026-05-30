@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lucas — Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">lucas<span class="accent">.</span>dev</a>
+      <ul class="nav-links">
+        <li><a href="#about">À propos</a></li>
+        <li><a href="#skills">Compétences</a></li>
+        <li><a href="#projects">Projets</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="burger" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-content">
+      <p class="hero-greeting">Bonjour, je suis</p>
+      <h1 class="hero-name">Lucas <span class="accent">Barabas</span></h1>
+      <p class="hero-role"><span class="typed-text"></span><span class="cursor">|</span></p>
+      <p class="hero-desc">Étudiant en informatique passionné par le développement logiciel, la création d'applications et la résolution de problèmes complexes.</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">Voir mes projets</a>
+        <a href="#contact" class="btn btn-ghost">Me contacter</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="code-card">
+        <div class="code-card-header">
+          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+          <span class="code-filename">about.js</span>
+        </div>
+        <pre class="code-body"><code><span class="kw">const</span> <span class="var">lucas</span> = {
+  <span class="key">role</span>: <span class="str">"Étudiant en informatique"</span>,
+  <span class="key">passions</span>: [
+    <span class="str">"développement web"</span>,
+    <span class="str">"algorithmique"</span>,
+    <span class="str">"open source"</span>
+  ],
+  <span class="key">disponible</span>: <span class="bool">true</span>
+};</code></pre>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">À <span class="accent">propos</span></h2>
+      <div class="about-grid">
+        <div class="about-avatar">
+          <div class="avatar-placeholder">LB</div>
+        </div>
+        <div class="about-text">
+          <p>Je suis étudiant en informatique, passionné par la création de solutions logicielles élégantes et fonctionnelles. Mon parcours m'a permis de développer des compétences solides autant en développement web qu'en programmation système.</p>
+          <p>Toujours curieux d'apprendre de nouvelles technologies, j'aime relever des défis techniques et contribuer à des projets open source. Je suis activement à la recherche de stages ou d'opportunités en alternance.</p>
+          <div class="about-stats">
+            <div class="stat">
+              <span class="stat-number">10+</span>
+              <span class="stat-label">Projets réalisés</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">3+</span>
+              <span class="stat-label">Années de code</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">∞</span>
+              <span class="stat-label">Curiosité</span>
+            </div>
+          </div>
+          <a href="cv.pdf" class="btn btn-primary" target="_blank">Télécharger mon CV</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="container">
+      <h2 class="section-title">Compé<span class="accent">tences</span></h2>
+      <div class="skills-grid">
+        <div class="skill-category">
+          <h3>Frontend</h3>
+          <div class="skill-tags">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">React</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>Backend</h3>
+          <div class="skill-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Java</span>
+            <span class="tag">Node.js</span>
+            <span class="tag">SQL</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>Outils</h3>
+          <div class="skill-tags">
+            <span class="tag">Git</span>
+            <span class="tag">Linux</span>
+            <span class="tag">Docker</span>
+            <span class="tag">VS Code</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>Concepts</h3>
+          <div class="skill-tags">
+            <span class="tag">Algorithmique</span>
+            <span class="tag">POO</span>
+            <span class="tag">REST API</span>
+            <span class="tag">Agile</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="container">
+      <h2 class="section-title">Mes <span class="accent">projets</span></h2>
+      <div class="projects-grid">
+
+        <article class="project-card">
+          <div class="project-header">
+            <div class="project-icon">🚀</div>
+            <div class="project-links">
+              <a href="#" aria-label="GitHub" class="icon-link">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              </a>
+              <a href="#" aria-label="Demo" class="icon-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+            </div>
+          </div>
+          <h3 class="project-title">Nom du projet 1</h3>
+          <p class="project-desc">Description courte de ce que fait ce projet, quel problème il résout et ce que tu as appris en le développant.</p>
+          <div class="project-tags">
+            <span class="tag tag-sm">Python</span>
+            <span class="tag tag-sm">Flask</span>
+            <span class="tag tag-sm">SQLite</span>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-header">
+            <div class="project-icon">🎮</div>
+            <div class="project-links">
+              <a href="#" aria-label="GitHub" class="icon-link">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              </a>
+              <a href="#" aria-label="Demo" class="icon-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+            </div>
+          </div>
+          <h3 class="project-title">Nom du projet 2</h3>
+          <p class="project-desc">Description courte de ce que fait ce projet, quel problème il résout et ce que tu as appris en le développant.</p>
+          <div class="project-tags">
+            <span class="tag tag-sm">JavaScript</span>
+            <span class="tag tag-sm">Canvas API</span>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-header">
+            <div class="project-icon">📊</div>
+            <div class="project-links">
+              <a href="#" aria-label="GitHub" class="icon-link">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              </a>
+              <a href="#" aria-label="Demo" class="icon-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+            </div>
+          </div>
+          <h3 class="project-title">Nom du projet 3</h3>
+          <p class="project-desc">Description courte de ce que fait ce projet, quel problème il résout et ce que tu as appris en le développant.</p>
+          <div class="project-tags">
+            <span class="tag tag-sm">Java</span>
+            <span class="tag tag-sm">POO</span>
+            <span class="tag tag-sm">Swing</span>
+          </div>
+        </article>
+
+        <article class="project-card project-card-cta">
+          <div class="project-icon">👾</div>
+          <p>Tu veux voir plus de projets ?</p>
+          <a href="https://github.com/ton-pseudo" class="btn btn-ghost" target="_blank">Voir mon GitHub</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Con<span class="accent">tact</span></h2>
+      <p class="contact-intro">Disponible pour un stage, une alternance ou simplement pour discuter d'un projet. N'hésite pas à me contacter !</p>
+      <div class="contact-grid">
+        <form class="contact-form" id="contact-form">
+          <div class="form-group">
+            <label for="name">Nom</label>
+            <input type="text" id="name" name="name" placeholder="Ton nom" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="ton@email.com" required />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Ton message..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Envoyer le message</button>
+          <p class="form-note">* Le formulaire s'ouvre dans ton client mail</p>
+        </form>
+        <div class="contact-links">
+          <a href="mailto:lucasbarabas355@gmail.com" class="contact-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+            <span>lucasbarabas355@gmail.com</span>
+          </a>
+          <a href="https://github.com/ton-pseudo" class="contact-link" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            <span>github.com/ton-pseudo</span>
+          </a>
+          <a href="https://linkedin.com/in/ton-profil" class="contact-link" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            <span>linkedin.com/in/ton-profil</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Fait avec <span class="accent">♥</span> par Lucas Barabas — <span id="year"></span></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
