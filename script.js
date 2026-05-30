@@ -79,8 +79,22 @@ const contactForm = document.getElementById('contact-form');
 const submitBtn = document.getElementById('submit-btn');
 const formStatus = document.getElementById('form-status');
 
+const COOLDOWN_MS = 10 * 60 * 1000; // 10 minutes
+
 contactForm.addEventListener('submit', async function (e) {
   e.preventDefault();
+
+  // Honeypot check
+  if (this._gotcha && this._gotcha.value) return;
+
+  // Cooldown check
+  const lastSent = localStorage.getItem('lastContactSent');
+  if (lastSent && Date.now() - parseInt(lastSent) < COOLDOWN_MS) {
+    const remaining = Math.ceil((COOLDOWN_MS - (Date.now() - parseInt(lastSent))) / 60000);
+    formStatus.className = 'form-status error';
+    formStatus.textContent = `Merci de patienter encore ${remaining} minute(s) avant d'envoyer un autre message.`;
+    return;
+  }
 
   submitBtn.disabled = true;
   submitBtn.textContent = 'Envoi en cours...';
@@ -95,6 +109,7 @@ contactForm.addEventListener('submit', async function (e) {
     });
 
     if (res.ok) {
+      localStorage.setItem('lastContactSent', Date.now());
       formStatus.className = 'form-status success';
       formStatus.textContent = 'Message envoyé ! Je te répondrai rapidement.';
       contactForm.reset();
