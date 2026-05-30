@@ -110,6 +110,17 @@ contactForm.addEventListener('submit', async function (e) {
   }
 });
 
+// Copy email to clipboard
+document.querySelector('a[href^="mailto:"].contact-link').addEventListener('click', function (e) {
+  e.preventDefault();
+  navigator.clipboard.writeText('lucasbarabas355@gmail.com').then(() => {
+    const span = this.querySelector('span');
+    const original = span.textContent;
+    span.textContent = 'Copié !';
+    setTimeout(() => { span.textContent = original; }, 2000);
+  });
+});
+
 // Footer year
 document.getElementById('year').textContent = new Date().getFullYear();
 
