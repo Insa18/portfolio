@@ -88,7 +88,7 @@ img { max-width: 100%; }
   font-weight: 700;
   margin-bottom: 3rem;
   letter-spacing: -0.02em;
-  color: var(--accent);
+  color: var(--text);
 }
 
 .accent { color: var(--accent); }
