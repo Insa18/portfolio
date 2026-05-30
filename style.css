@@ -92,6 +92,7 @@ img { max-width: 100%; }
 }
 
 .accent { color: var(--accent); }
+.section-title .accent { color: inherit; }
 
 /* ===== NAVBAR ===== */
 #navbar {
