@@ -72,15 +72,42 @@ document.querySelectorAll(
   observer.observe(el);
 });
 
-// Contact form — mailto fallback
-document.getElementById('contact-form').addEventListener('submit', function (e) {
+// Contact form — Formspree
+const FORMSPREE_ID = 'xykvawgp'; 
+
+const contactForm = document.getElementById('contact-form');
+const submitBtn = document.getElementById('submit-btn');
+const formStatus = document.getElementById('form-status');
+
+contactForm.addEventListener('submit', async function (e) {
   e.preventDefault();
-  const name = this.name.value;
-  const email = this.email.value;
-  const message = this.message.value;
-  const subject = encodeURIComponent(`Contact portfolio — ${name}`);
-  const body = encodeURIComponent(`${message}\n\n---\nEnvoyé par : ${name} (${email})`);
-  window.location.href = `mailto:lucasbarabas355@gmail.com?subject=${subject}&body=${body}`;
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Envoi en cours...';
+  formStatus.className = 'form-status';
+  formStatus.textContent = '';
+
+  try {
+    const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(contactForm),
+    });
+
+    if (res.ok) {
+      formStatus.className = 'form-status success';
+      formStatus.textContent = 'Message envoyé ! Je te répondrai rapidement.';
+      contactForm.reset();
+    } else {
+      throw new Error();
+    }
+  } catch {
+    formStatus.className = 'form-status error';
+    formStatus.textContent = 'Erreur lors de l\'envoi. Réessaie ou contacte-moi par email.';
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Envoyer le message';
+  }
 });
 
 // Footer year
