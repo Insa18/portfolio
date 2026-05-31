@@ -379,6 +379,23 @@ document.querySelectorAll('.project-card:not(.project-card-cta)').forEach(card =
   });
 });
 
+// ===== PET EYE TRACKING =====
+document.addEventListener('mousemove', (e) => {
+  const pet = document.getElementById('pet');
+  if (!pet) return;
+  const rect = pet.getBoundingClientRect();
+  [['pupil-left', 20], ['pupil-right', 40]].forEach(([id, baseCx]) => {
+    const pupil = document.getElementById(id);
+    if (!pupil) return;
+    const eyeX = rect.left + (baseCx / 60) * rect.width;
+    const eyeY = rect.top + (37 / 70) * rect.height;
+    const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
+    const dist = 3;
+    pupil.setAttribute('cx', baseCx + Math.cos(angle) * dist);
+    pupil.setAttribute('cy', 37 + Math.sin(angle) * dist);
+  });
+});
+
 // ===== FOOTER YEAR =====
 document.getElementById('year').textContent = new Date().getFullYear();
 

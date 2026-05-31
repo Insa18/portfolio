@@ -788,6 +788,27 @@ footer {
   border-top: 1px solid var(--border);
 }
 
+/* ===== PET ===== */
+.pet {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 50;
+  cursor: pointer;
+  filter: drop-shadow(0 4px 16px rgba(124, 106, 247, 0.4));
+  animation: petBob 3s ease-in-out infinite;
+  transition: filter var(--transition);
+}
+
+.pet:hover {
+  filter: drop-shadow(0 6px 24px rgba(124, 106, 247, 0.7));
+}
+
+@keyframes petBob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+
 /* ===== SCROLL ANIMATIONS ===== */
 .fade-in {
   opacity: 0;
