@@ -567,14 +567,18 @@ function triggerEasterEgg() {
   }, 3000);
 }
 
-// Scroll surprise (desktop only — touch scroll is naturally fast)
-const isTouchDevice = window.matchMedia('(hover: none)').matches;
+// Scroll surprise (desktop only — skip during touch scroll)
+let isTouching = false;
+window.addEventListener('touchstart', () => { isTouching = true; }, { passive: true });
+window.addEventListener('touchend', () => { isTouching = false; }, { passive: true });
+window.addEventListener('touchcancel', () => { isTouching = false; }, { passive: true });
+
 let lastSY = window.scrollY;
 let lastST = Date.now();
 let surpriseTimer = null;
 
 window.addEventListener('scroll', () => {
-  if (isTouchDevice) return;
+  if (isTouching) return;
   const now = Date.now();
   const dy = Math.abs(window.scrollY - lastSY);
   const dt = (now - lastST) || 1;
