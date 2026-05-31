@@ -567,15 +567,13 @@ function triggerEasterEgg() {
   }, 3000);
 }
 
-// Scroll surprise (desktop only — disabled on touch-capable devices)
-const hasTouchCapability = navigator.maxTouchPoints > 0 || 'ontouchstart' in window;
-
+// Scroll surprise (desktop only)
 let lastSY = window.scrollY;
 let lastST = Date.now();
 let surpriseTimer = null;
 
 window.addEventListener('scroll', () => {
-  if (hasTouchCapability) return;
+  if (window.innerWidth < 768) return;
   const now = Date.now();
   const dy = Math.abs(window.scrollY - lastSY);
   const dt = (now - lastST) || 1;
