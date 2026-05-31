@@ -567,18 +567,15 @@ function triggerEasterEgg() {
   }, 3000);
 }
 
-// Scroll surprise (desktop only — skip during touch scroll)
-let isTouching = false;
-window.addEventListener('touchstart', () => { isTouching = true; }, { passive: true });
-window.addEventListener('touchend', () => { isTouching = false; }, { passive: true });
-window.addEventListener('touchcancel', () => { isTouching = false; }, { passive: true });
+// Scroll surprise (desktop only — disabled on touch-capable devices)
+const hasTouchCapability = navigator.maxTouchPoints > 0 || 'ontouchstart' in window;
 
 let lastSY = window.scrollY;
 let lastST = Date.now();
 let surpriseTimer = null;
 
 window.addEventListener('scroll', () => {
-  if (isTouching) return;
+  if (hasTouchCapability) return;
   const now = Date.now();
   const dy = Math.abs(window.scrollY - lastSY);
   const dt = (now - lastST) || 1;
