@@ -9,7 +9,6 @@ const roles = [
   'Étudiant en informatique',
   'Développeur web',
   'Passionné de code',
-  'Futur ingénieur logiciel',
 ];
 let roleIndex = 0;
 let charIndex = 0;
@@ -85,7 +84,7 @@ contactForm.addEventListener('submit', async function (e) {
   e.preventDefault();
 
   // Honeypot check
-  if (this._gotcha && this._gotcha.value) return;
+  if (this.querySelector('[name="_gotcha"]').value) return;
 
   // Cooldown check
   const lastSent = localStorage.getItem('lastContactSent');
