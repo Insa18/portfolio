@@ -54,22 +54,57 @@ navLinks.querySelectorAll('a').forEach(link => {
   });
 });
 
-// Intersection Observer — fade-in
+// Intersection Observer — scroll animations
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
+    } else {
+      entry.target.classList.remove('visible');
     }
   });
-}, { threshold: 0.1 });
+}, { threshold: 0.12 });
 
-document.querySelectorAll(
-  '.about-grid, .skill-category, .project-card, .contact-form, .contact-links'
-).forEach(el => {
+// Section titles
+document.querySelectorAll('.section-title').forEach(el => {
   el.classList.add('fade-in');
   observer.observe(el);
 });
+
+// About — avatar glisse depuis la gauche, texte depuis la droite
+const avatar = document.querySelector('.about-avatar');
+const aboutText = document.querySelector('.about-text');
+if (avatar) { avatar.classList.add('fade-in-left'); observer.observe(avatar); }
+if (aboutText) { aboutText.classList.add('fade-in-right'); observer.observe(aboutText); }
+
+// Stats en cascade
+document.querySelectorAll('.stat').forEach((el, i) => {
+  el.classList.add('fade-in');
+  el.style.transitionDelay = `${i * 0.12}s`;
+  observer.observe(el);
+});
+
+// Compétences en cascade
+document.querySelectorAll('.skill-category').forEach((el, i) => {
+  el.classList.add('fade-in');
+  el.style.transitionDelay = `${i * 0.1}s`;
+  observer.observe(el);
+});
+
+// Projets en cascade
+document.querySelectorAll('.project-card').forEach((el, i) => {
+  el.classList.add('fade-in');
+  el.style.transitionDelay = `${i * 0.12}s`;
+  observer.observe(el);
+});
+
+// Contact
+document.querySelector('.contact-intro')?.classList.add('fade-in');
+document.querySelector('.contact-intro') && observer.observe(document.querySelector('.contact-intro'));
+document.querySelector('.contact-form')?.classList.add('fade-in');
+document.querySelector('.contact-form') && observer.observe(document.querySelector('.contact-form'));
+document.querySelector('.contact-links')?.classList.add('fade-in-right');
+document.querySelector('.contact-links') && observer.observe(document.querySelector('.contact-links'));
 
 // Contact form — Formspree
 const FORMSPREE_ID = 'xykvawgp'; 
