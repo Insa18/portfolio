@@ -385,15 +385,15 @@ document.addEventListener('mousemove', (e) => {
   if (!pet) return;
   if (typeof petState !== 'undefined' && petState !== 'normal') return;
   const rect = pet.getBoundingClientRect();
-  [['pupil-left', 20], ['pupil-right', 40]].forEach(([id, baseCx]) => {
+  [['pupil-left', 19], ['pupil-right', 51]].forEach(([id, baseCx]) => {
     const pupil = document.getElementById(id);
     if (!pupil) return;
-    const eyeX = rect.left + (baseCx / 60) * rect.width;
-    const eyeY = rect.top + (37 / 70) * rect.height;
+    const eyeX = rect.left + (baseCx / 70) * rect.width;
+    const eyeY = rect.top + (12.5 / 82) * rect.height;
     const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
-    const dist = 3;
+    const dist = 4;
     pupil.setAttribute('cx', baseCx + Math.cos(angle) * dist);
-    pupil.setAttribute('cy', 37 + Math.sin(angle) * dist);
+    pupil.setAttribute('cy', 12.5 + Math.sin(angle) * dist);
   });
 });
 
@@ -482,23 +482,23 @@ function setPetState(state) {
   petState = state;
   switch (state) {
     case 'surprised':
-      pupilL.setAttribute('r', '6.5'); pupilR.setAttribute('r', '6.5');
-      pupilL.setAttribute('cy', '37'); pupilR.setAttribute('cy', '37');
-      petMouth.setAttribute('d', 'M 23 56 Q 30 56 37 56');
+      pupilL.setAttribute('r', '5.5'); pupilR.setAttribute('r', '5.5');
+      pupilL.setAttribute('cy', '12.5'); pupilR.setAttribute('cy', '12.5');
+      petMouth.setAttribute('d', 'M 25 57 Q 35 57 45 57');
       petEl.classList.remove('sleeping');
       petZzz.classList.remove('visible');
       break;
     case 'sleeping':
       pupilL.setAttribute('r', '2'); pupilR.setAttribute('r', '2');
-      pupilL.setAttribute('cy', '41'); pupilR.setAttribute('cy', '41');
-      petMouth.setAttribute('d', 'M 20 57 Q 30 53 40 57');
+      pupilL.setAttribute('cy', '17'); pupilR.setAttribute('cy', '17');
+      petMouth.setAttribute('d', 'M 23 58 Q 35 54 47 58');
       petEl.classList.add('sleeping');
       petZzz.classList.add('visible');
       break;
     default:
-      pupilL.setAttribute('r', '4.5'); pupilR.setAttribute('r', '4.5');
-      pupilL.setAttribute('cy', '37'); pupilR.setAttribute('cy', '37');
-      petMouth.setAttribute('d', 'M 18 53 Q 30 61 42 53');
+      pupilL.setAttribute('r', '3.5'); pupilR.setAttribute('r', '3.5');
+      pupilL.setAttribute('cy', '12.5'); pupilR.setAttribute('cy', '12.5');
+      petMouth.setAttribute('d', 'M 22 55 Q 35 61 48 55');
       petEl.classList.remove('sleeping');
       petZzz.classList.remove('visible');
   }
@@ -542,21 +542,24 @@ petEl.addEventListener('click', () => {
 function triggerEasterEgg() {
   petEl.classList.add('dancing');
   petState = 'dancing';
-  const petBody = petEl.querySelectorAll('rect')[0];
-  const petAntenna = petEl.querySelector('circle');
+  const petBody = document.getElementById('pet-body');
+  const eyeHL = document.getElementById('eye-housing-left');
+  const eyeHR = document.getElementById('eye-housing-right');
   const rainbow = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#c77dff'];
   let ci = 0;
   const colorLoop = setInterval(() => {
     const c = rainbow[ci++ % rainbow.length];
     if (petBody) petBody.setAttribute('fill', c);
-    if (petAntenna) petAntenna.setAttribute('fill', c);
+    if (eyeHL) eyeHL.setAttribute('fill', rainbow[(ci + 2) % rainbow.length]);
+    if (eyeHR) eyeHR.setAttribute('fill', rainbow[(ci + 4) % rainbow.length]);
   }, 150);
   showBubble(currentLang === 'fr' ? '🎉 Danse avec moi !' : '🎉 Dance with me!');
   setTimeout(() => {
     petEl.classList.remove('dancing');
     clearInterval(colorLoop);
-    if (petBody) petBody.setAttribute('fill', '#7c6af7');
-    if (petAntenna) petAntenna.setAttribute('fill', '#7c6af7');
+    if (petBody) petBody.setAttribute('fill', '#C8A84B');
+    if (eyeHL) eyeHL.setAttribute('fill', '#484848');
+    if (eyeHR) eyeHR.setAttribute('fill', '#484848');
     petState = 'normal';
   }, 3000);
 }
