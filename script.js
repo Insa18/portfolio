@@ -2,6 +2,7 @@
 const i18n = {
   fr: {
     'nav.about': 'À propos',
+    'nav.parcours': 'Parcours',
     'nav.skills': 'Compétences',
     'nav.projects': 'Projets',
     'nav.contact': 'Contact',
@@ -39,6 +40,15 @@ const i18n = {
     'contact.copied': 'Copié !',
     'footer.text': 'Fait avec <span class="accent">♥</span> par Lucas Barabas — <span id="year"></span>',
     'roles': ['Étudiant en informatique', 'Développeur web', 'Passionné de code'],
+    'timeline.title': 'Mon <span class="accent">parcours</span>',
+    'timeline.bac.title': 'Baccalauréat',
+    'timeline.bac.desc': "Obtention du baccalauréat, avec un attrait marqué pour les mathématiques et l'informatique.",
+    'timeline.bts.desc': "Cybersécurité, Informatique et réseaux, Électronique. Formation axée sur les systèmes embarqués, la programmation et les réseaux.",
+    'timeline.present': 'présent',
+    'timeline.current': 'En cours',
+    'timeline.but.title': 'BUT Informatique',
+    'timeline.but.school': '2ème année',
+    'timeline.but.desc': "Formation universitaire en informatique couvrant le développement logiciel, les bases de données, les réseaux et la gestion de projets.",
     'code.role': '"Étudiant en informatique"',
     'code.p1': '"développement web"',
     'code.p2': '"programmation"',
@@ -46,6 +56,7 @@ const i18n = {
   },
   en: {
     'nav.about': 'About',
+    'nav.parcours': 'Journey',
     'nav.skills': 'Skills',
     'nav.projects': 'Projects',
     'nav.contact': 'Contact',
@@ -83,6 +94,15 @@ const i18n = {
     'contact.copied': 'Copied!',
     'footer.text': 'Made with <span class="accent">♥</span> by Lucas Barabas — <span id="year"></span>',
     'roles': ['Computer Science Student', 'Web Developer', 'Code Enthusiast'],
+    'timeline.title': 'My <span class="accent">Journey</span>',
+    'timeline.bac.title': 'Baccalauréat (French A-levels)',
+    'timeline.bac.desc': 'Obtained the baccalauréat with a strong interest in mathematics and computer science.',
+    'timeline.bts.desc': 'Cybersecurity, Networking & Electronics. Training focused on embedded systems, programming and networking.',
+    'timeline.present': 'present',
+    'timeline.current': 'Ongoing',
+    'timeline.but.title': 'Bachelor in Computer Science',
+    'timeline.but.school': '2nd year',
+    'timeline.but.desc': 'University-level program covering software development, databases, networking and project management.',
     'code.role': '"Computer Science Student"',
     'code.p1': '"web development"',
     'code.p2': '"programming"',
@@ -212,6 +232,12 @@ if (aboutText) { aboutText.classList.add('fade-in-right'); observer.observe(abou
 document.querySelectorAll('.stat').forEach((el, i) => {
   el.classList.add('fade-in');
   el.style.transitionDelay = `${i * 0.12}s`;
+  observer.observe(el);
+});
+
+document.querySelectorAll('.timeline-item').forEach((el, i) => {
+  el.classList.add('fade-in-left');
+  el.style.transitionDelay = `${i * 0.15}s`;
   observer.observe(el);
 });
 
