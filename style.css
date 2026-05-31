@@ -696,11 +696,12 @@ img { max-width: 100%; }
 }
 
 .contact-grid {
-  display: grid;
-  grid-template-columns: 1fr auto;
+  display: flex;
   gap: 4rem;
-  align-items: start;
+  align-items: flex-start;
 }
+
+.contact-form { flex: 1; }
 
 .contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
 
@@ -757,6 +758,7 @@ img { max-width: 100%; }
   flex-direction: column;
   gap: 1.25rem;
   min-width: 260px;
+  align-self: start;
 }
 
 .contact-link {
