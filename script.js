@@ -1,7 +1,10 @@
-// Navbar scroll effect
+// Navbar scroll effect + progress bar
 const navbar = document.getElementById('navbar');
+const progressBar = document.getElementById('progress-bar');
 window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 50);
+  const scrolled = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+  progressBar.style.width = `${scrolled * 100}%`;
 });
 
 // Typed text animation
@@ -167,6 +170,51 @@ document.querySelector('a[href^="mailto:"].contact-link').addEventListener('clic
     const original = span.textContent;
     span.textContent = 'Copié !';
     setTimeout(() => { span.textContent = original; }, 2000);
+  });
+});
+
+// Animated counters — store target in data attribute to always start from 0
+document.querySelectorAll('.stat-number').forEach(el => {
+  const text = el.textContent.trim();
+  const num = parseInt(text);
+  if (!isNaN(num)) {
+    el.dataset.target = num;
+    el.dataset.suffix = text.replace(num.toString(), '');
+  }
+});
+
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  if (isNaN(target)) return;
+  const suffix = el.dataset.suffix || '';
+  const duration = 1400;
+  const start = performance.now();
+  el.textContent = '0' + suffix;
+  function update(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(eased * target) + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) animateCounter(entry.target);
+  });
+}, { threshold: 0.6 });
+
+document.querySelectorAll('.stat-number[data-target]').forEach(el => counterObserver.observe(el));
+
+
+// Clickable project cards
+document.querySelectorAll('.project-card:not(.project-card-cta)').forEach(card => {
+  const githubLink = card.querySelector('.icon-link[aria-label="GitHub"]');
+  if (!githubLink) return;
+  card.addEventListener('click', (e) => {
+    if (e.target.closest('.icon-link')) return;
+    window.open(githubLink.href, '_blank', 'noopener');
   });
 });
 
