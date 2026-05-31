@@ -691,7 +691,7 @@ img { max-width: 100%; }
 .contact-intro {
   color: var(--text-muted);
   max-width: 560px;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   line-height: 1.75;
 }
 
