@@ -504,6 +504,19 @@ function setPetState(state) {
   }
 }
 
+// Wave
+const armWave = document.getElementById('arm-wave');
+function triggerWave() {
+  if (petState === 'normal' && armWave) {
+    armWave.classList.remove('waving');
+    void armWave.offsetWidth;
+    armWave.classList.add('waving');
+    armWave.addEventListener('animationend', () => armWave.classList.remove('waving'), { once: true });
+  }
+  setTimeout(triggerWave, 18000 + Math.random() * 22000);
+}
+setTimeout(triggerWave, 800);
+
 // Blink
 function doBlink() {
   if (petState !== 'normal') { scheduleBlink(); return; }
