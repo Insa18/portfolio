@@ -383,6 +383,7 @@ document.querySelectorAll('.project-card:not(.project-card-cta)').forEach(card =
 document.addEventListener('mousemove', (e) => {
   const pet = document.getElementById('pet');
   if (!pet) return;
+  if (typeof petState !== 'undefined' && petState !== 'normal') return;
   const rect = pet.getBoundingClientRect();
   [['pupil-left', 20], ['pupil-right', 40]].forEach(([id, baseCx]) => {
     const pupil = document.getElementById(id);
@@ -401,3 +402,219 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
 // Apply saved language on load
 if (currentLang === 'en') applyLang('en');
+
+// ===== PET INTERACTIONS =====
+let petState = 'normal';
+
+const petMessages = {
+  fr: [
+    'Bonjour ! 👾',
+    'git commit -m "ça marche enfin"',
+    'Je surveille ton curseur...',
+    'Café ou NullPointerException ?',
+    'Stack Overflow est mon meilleur ami.',
+    '// TODO: finir ça plus tard',
+    'chmod 777... attends non.',
+    'Ctrl+Z, Ctrl+Z, Ctrl+Z...',
+    'Tu veux voir mes projets ? ↑',
+    'Il est ' + new Date().getHours() + 'h, tu dors pas ?',
+  ],
+  en: [
+    'Hello! 👾',
+    'git commit -m "it finally works"',
+    "I'm watching your cursor...",
+    'Coffee or NullPointerException?',
+    'Stack Overflow is my best friend.',
+    '// TODO: finish this later',
+    'chmod 777... wait, no.',
+    'Ctrl+Z, Ctrl+Z, Ctrl+Z...',
+    'Want to see my projects? ↑',
+    "It's " + new Date().getHours() + "h, still awake?",
+  ]
+};
+
+// Bubble
+const petBubble = document.createElement('div');
+petBubble.className = 'pet-bubble';
+document.body.appendChild(petBubble);
+
+let bubbleTimer = null;
+let typeTimer = null;
+let lastMsgIdx = -1;
+
+function showBubble(text) {
+  clearTimeout(bubbleTimer);
+  clearInterval(typeTimer);
+  petBubble.textContent = '';
+  petBubble.classList.add('visible');
+  let i = 0;
+  typeTimer = setInterval(() => {
+    petBubble.textContent += text[i++];
+    if (i >= text.length) clearInterval(typeTimer);
+  }, 35);
+  bubbleTimer = setTimeout(() => petBubble.classList.remove('visible'), 4500);
+}
+
+function randomMessage() {
+  const msgs = petMessages[currentLang] || petMessages.fr;
+  let idx;
+  do { idx = Math.floor(Math.random() * msgs.length); } while (idx === lastMsgIdx && msgs.length > 1);
+  lastMsgIdx = idx;
+  return msgs[idx];
+}
+
+// DOM refs
+const petEl = document.getElementById('pet');
+const pupilL = document.getElementById('pupil-left');
+const pupilR = document.getElementById('pupil-right');
+const petMouth = document.getElementById('pet-mouth');
+const eyeL = document.getElementById('eye-left');
+const eyeR = document.getElementById('eye-right');
+
+// Zzz element
+const petZzz = document.createElement('div');
+petZzz.className = 'pet-zzz';
+petZzz.textContent = 'z';
+document.body.appendChild(petZzz);
+
+function setPetState(state) {
+  if (petState === state) return;
+  petState = state;
+  switch (state) {
+    case 'surprised':
+      pupilL.setAttribute('r', '6.5'); pupilR.setAttribute('r', '6.5');
+      pupilL.setAttribute('cy', '37'); pupilR.setAttribute('cy', '37');
+      petMouth.setAttribute('d', 'M 23 56 Q 30 56 37 56');
+      petEl.classList.remove('sleeping');
+      petZzz.classList.remove('visible');
+      break;
+    case 'sleeping':
+      pupilL.setAttribute('r', '2'); pupilR.setAttribute('r', '2');
+      pupilL.setAttribute('cy', '41'); pupilR.setAttribute('cy', '41');
+      petMouth.setAttribute('d', 'M 20 57 Q 30 53 40 57');
+      petEl.classList.add('sleeping');
+      petZzz.classList.add('visible');
+      break;
+    default:
+      pupilL.setAttribute('r', '4.5'); pupilR.setAttribute('r', '4.5');
+      pupilL.setAttribute('cy', '37'); pupilR.setAttribute('cy', '37');
+      petMouth.setAttribute('d', 'M 18 53 Q 30 61 42 53');
+      petEl.classList.remove('sleeping');
+      petZzz.classList.remove('visible');
+  }
+}
+
+// Blink
+function doBlink() {
+  if (petState !== 'normal') { scheduleBlink(); return; }
+  eyeL.classList.add('blinking');
+  eyeR.classList.add('blinking');
+  setTimeout(() => { eyeL.classList.remove('blinking'); eyeR.classList.remove('blinking'); }, 150);
+  scheduleBlink();
+}
+function scheduleBlink() { setTimeout(doBlink, 2500 + Math.random() * 4000); }
+scheduleBlink();
+
+// Click / easter egg
+let clickCount = 0;
+let clickResetTimer = null;
+
+petEl.addEventListener('click', () => {
+  clickCount++;
+  clearTimeout(clickResetTimer);
+  clickResetTimer = setTimeout(() => { clickCount = 0; }, 1500);
+
+  if (clickCount >= 7) {
+    clickCount = 0;
+    triggerEasterEgg();
+    return;
+  }
+  if (petState === 'sleeping') {
+    setPetState('normal');
+    showBubble(currentLang === 'fr' ? 'Hm... zzzz... quoi ?!' : 'Hm... zzzz... what?!');
+    resetIdle();
+    return;
+  }
+  if (petState === 'normal') showBubble(randomMessage());
+});
+
+// Easter egg
+function triggerEasterEgg() {
+  petEl.classList.add('dancing');
+  petState = 'dancing';
+  const petBody = petEl.querySelectorAll('rect')[0];
+  const petAntenna = petEl.querySelector('circle');
+  const rainbow = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#c77dff'];
+  let ci = 0;
+  const colorLoop = setInterval(() => {
+    const c = rainbow[ci++ % rainbow.length];
+    if (petBody) petBody.setAttribute('fill', c);
+    if (petAntenna) petAntenna.setAttribute('fill', c);
+  }, 150);
+  showBubble(currentLang === 'fr' ? '🎉 Danse avec moi !' : '🎉 Dance with me!');
+  setTimeout(() => {
+    petEl.classList.remove('dancing');
+    clearInterval(colorLoop);
+    if (petBody) petBody.setAttribute('fill', '#7c6af7');
+    if (petAntenna) petAntenna.setAttribute('fill', '#7c6af7');
+    petState = 'normal';
+  }, 3000);
+}
+
+// Scroll surprise
+let lastSY = window.scrollY;
+let lastST = Date.now();
+let surpriseTimer = null;
+
+window.addEventListener('scroll', () => {
+  const now = Date.now();
+  const dy = Math.abs(window.scrollY - lastSY);
+  const dt = (now - lastST) || 1;
+  const speed = dy / dt;
+  lastSY = window.scrollY;
+  lastST = now;
+
+  if (speed > 1.5 && petState === 'normal') {
+    setPetState('surprised');
+    showBubble(currentLang === 'fr' ? 'Woah, doucement !' : 'Woah, slow down!');
+    clearTimeout(surpriseTimer);
+    surpriseTimer = setTimeout(() => setPetState('normal'), 1800);
+  }
+}, { passive: true });
+
+// Idle / sleep
+let idleTimer = null;
+function resetIdle() {
+  clearTimeout(idleTimer);
+  if (petState === 'sleeping') setPetState('normal');
+  idleTimer = setTimeout(() => { if (petState === 'normal') setPetState('sleeping'); }, 10000);
+}
+['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(ev =>
+  window.addEventListener(ev, resetIdle, { passive: true })
+);
+resetIdle();
+
+// ===== THEME TOGGLE =====
+const themeToggle = document.getElementById('theme-toggle');
+const SUN_ICON = `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+const MOON_ICON = `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+
+function applyTheme(theme) {
+  if (theme === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+    themeToggle.innerHTML = MOON_ICON;
+    themeToggle.setAttribute('aria-label', 'Activer le mode sombre');
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+    themeToggle.innerHTML = SUN_ICON;
+    themeToggle.setAttribute('aria-label', 'Activer le mode clair');
+  }
+  localStorage.setItem('theme', theme);
+}
+
+const savedTheme = localStorage.getItem('theme') || 'dark';
+applyTheme(savedTheme);
+
+themeToggle.addEventListener('click', () => {
+  applyTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+});
