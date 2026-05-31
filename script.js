@@ -474,7 +474,7 @@ const eyeR = document.getElementById('eye-right');
 // Zzz element
 const petZzz = document.createElement('div');
 petZzz.className = 'pet-zzz';
-petZzz.textContent = 'z';
+petZzz.innerHTML = '<span>z</span><span>z</span><span>z</span>';
 document.body.appendChild(petZzz);
 
 function setPetState(state) {
@@ -590,7 +590,7 @@ let idleTimer = null;
 function resetIdle() {
   clearTimeout(idleTimer);
   if (petState === 'sleeping') setPetState('normal');
-  idleTimer = setTimeout(() => { if (petState === 'normal') setPetState('sleeping'); }, 10000);
+  idleTimer = setTimeout(() => { if (petState === 'normal') setPetState('sleeping'); }, 15000);
 }
 ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(ev =>
   window.addEventListener(ev, resetIdle, { passive: true })

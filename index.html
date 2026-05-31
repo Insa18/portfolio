@@ -322,7 +322,7 @@
   </footer>
 
   <div class="pet" id="pet" aria-hidden="true">
-    <svg viewBox="0 0 70 82" width="88" height="103" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 70 82" width="88" height="103" xmlns="http://www.w3.org/2000/svg" overflow="visible">
       <defs>
         <linearGradient id="walle-shine" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stop-color="white"/>
@@ -341,6 +341,22 @@
       <line x1="47" y1="66" x2="66" y2="66" stroke="#4a4a4a" stroke-width="1.5" stroke-linecap="round"/>
       <line x1="47" y1="70" x2="66" y2="70" stroke="#4a4a4a" stroke-width="1.5" stroke-linecap="round"/>
       <line x1="47" y1="74" x2="66" y2="74" stroke="#4a4a4a" stroke-width="1.5" stroke-linecap="round"/>
+
+      <!-- Bras gauche (animé) -->
+      <g id="arm-wave">
+        <circle cx="9" cy="45" r="4.5" fill="#907830"/>
+        <line x1="9" y1="45" x2="-6" y2="57" stroke="#B09040" stroke-width="7" stroke-linecap="round"/>
+        <circle cx="-6" cy="57" r="3.5" fill="#907830"/>
+        <line x1="-6" y1="57" x2="-12" y2="54" stroke="#6a6a6a" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="-6" y1="57" x2="-12" y2="60" stroke="#6a6a6a" stroke-width="2.5" stroke-linecap="round"/>
+      </g>
+
+      <!-- Bras droit -->
+      <circle cx="61" cy="45" r="4.5" fill="#907830"/>
+      <line x1="61" y1="45" x2="75" y2="54" stroke="#B09040" stroke-width="7" stroke-linecap="round"/>
+      <circle cx="75" cy="54" r="3.5" fill="#907830"/>
+      <line x1="75" y1="54" x2="81" y2="51" stroke="#6a6a6a" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="75" y1="54" x2="81" y2="57" stroke="#6a6a6a" stroke-width="2.5" stroke-linecap="round"/>
 
       <!-- Corps -->
       <rect id="pet-body" x="9" y="32" width="52" height="30" rx="4" fill="#C8A84B"/>
