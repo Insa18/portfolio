@@ -442,7 +442,7 @@ let bubbleTimer = null;
 let typeTimer = null;
 let lastMsgIdx = -1;
 
-function showBubble(text) {
+function showBubble(text, duration = 4500) {
   clearTimeout(bubbleTimer);
   clearInterval(typeTimer);
   petBubble.textContent = '';
@@ -452,7 +452,7 @@ function showBubble(text) {
     petBubble.textContent += text[i++];
     if (i >= text.length) clearInterval(typeTimer);
   }, 35);
-  bubbleTimer = setTimeout(() => petBubble.classList.remove('visible'), 4500);
+  bubbleTimer = setTimeout(() => petBubble.classList.remove('visible'), duration);
 }
 
 function randomMessage() {
@@ -506,12 +506,17 @@ function setPetState(state) {
 
 // Wave
 const armWave = document.getElementById('arm-wave');
+let firstWave = true;
 function triggerWave() {
   if (petState === 'normal' && armWave) {
     armWave.classList.remove('waving');
     void armWave.offsetWidth;
     armWave.classList.add('waving');
     armWave.addEventListener('animationend', () => armWave.classList.remove('waving'), { once: true });
+    if (firstWave) {
+      firstWave = false;
+      setTimeout(() => showBubble(currentLang === 'fr' ? 'Salut ! 👋' : 'Hello! 👋', 2000), 200);
+    }
   }
   setTimeout(triggerWave, 18000 + Math.random() * 22000);
 }
@@ -555,24 +560,9 @@ petEl.addEventListener('click', () => {
 function triggerEasterEgg() {
   petEl.classList.add('dancing');
   petState = 'dancing';
-  const petBody = document.getElementById('pet-body');
-  const eyeHL = document.getElementById('eye-housing-left');
-  const eyeHR = document.getElementById('eye-housing-right');
-  const rainbow = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#c77dff'];
-  let ci = 0;
-  const colorLoop = setInterval(() => {
-    const c = rainbow[ci++ % rainbow.length];
-    if (petBody) petBody.setAttribute('fill', c);
-    if (eyeHL) eyeHL.setAttribute('fill', rainbow[(ci + 2) % rainbow.length]);
-    if (eyeHR) eyeHR.setAttribute('fill', rainbow[(ci + 4) % rainbow.length]);
-  }, 150);
   showBubble(currentLang === 'fr' ? '🎉 Danse avec moi !' : '🎉 Dance with me!');
   setTimeout(() => {
     petEl.classList.remove('dancing');
-    clearInterval(colorLoop);
-    if (petBody) petBody.setAttribute('fill', '#C8A84B');
-    if (eyeHL) eyeHL.setAttribute('fill', '#484848');
-    if (eyeHR) eyeHR.setAttribute('fill', '#484848');
     petState = 'normal';
   }, 3000);
 }
