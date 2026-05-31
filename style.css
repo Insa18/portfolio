@@ -698,7 +698,7 @@ img { max-width: 100%; }
 .contact-grid {
   display: flex;
   gap: 4rem;
-  align-items: flex-start;
+  align-items: flex-start;;
 }
 
 .contact-form { flex: 1; }
