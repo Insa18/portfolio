@@ -988,8 +988,8 @@ footer {
   90%  { transform: translate(9px,45px) rotate(10deg) translate(-9px,-45px); }
   100% { transform: translate(9px,45px) rotate(0deg)   translate(-9px,-45px); }
 }
-#arm-wave {
-  animation: waveArm 2.5s ease-in-out 0.5s 1;
+#arm-wave.waving {
+  animation: waveArm 2.5s ease-in-out 1;
 }
 
 /* ===== RESPONSIVE ===== */
