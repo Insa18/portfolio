@@ -1,4 +1,143 @@
-// Navbar scroll effect + progress bar
+// ===== TRANSLATIONS =====
+const i18n = {
+  fr: {
+    'nav.about': 'À propos',
+    'nav.skills': 'Compétences',
+    'nav.projects': 'Projets',
+    'nav.contact': 'Contact',
+    'hero.greeting': 'Bonjour, je suis',
+    'hero.desc': "Étudiant en informatique passionné par le développement logiciel, la création d'applications.",
+    'hero.cta.projects': 'Voir mes projets',
+    'hero.cta.contact': 'Me contacter',
+    'about.title': 'À <span class="accent">propos</span>',
+    'about.p1': "Je suis étudiant en informatique, passionné par la création de solutions logicielles élégantes et fonctionnelles. Mon parcours m'a permis de développer des compétences autant en développement web qu'en programmation système.",
+    'about.p2': "Toujours curieux d'apprendre de nouvelles technologies, j'aime relever des défis techniques. Je suis activement à la recherche d'une alternance.",
+    'about.stat1': 'Projets réalisés',
+    'about.stat2': 'Années de code',
+    'about.stat3': 'Curiosité',
+    'about.cv': 'Demander mon CV',
+    'skills.title': 'Compé<span class="accent">tences</span>',
+    'skills.cat.systems': 'Systèmes',
+    'skills.cat.tools': 'Outils',
+    'skills.cat.concepts': 'Concepts',
+    'projects.title': 'Mes <span class="accent">projets</span>',
+    'project.cartolidar.desc': "Robot de cartographie d'intérieur équipé d'un capteur LIDAR 360° pour détecter les obstacles et mapper les espaces. Contrôlable via une application mobile ou des programmes prédéfinis, avec transmission des données en WiFi.",
+    'project.audit.desc': "Jeu sérieux où le joueur incarne un auditeur explorant un campus universitaire pour collecter des informations et accomplir une mission d'audit. Système de dialogues avec PNJ, plusieurs zones explorables et score basé sur l'avancement.",
+    'project.cta.text': 'Tu veux voir plus de projets ?',
+    'project.cta.btn': 'Voir mon GitHub',
+    'contact.title': 'Con<span class="accent">tact</span>',
+    'contact.intro': "Disponible pour un stage, une alternance ou simplement pour discuter d'un projet. N'hésite pas à me contacter !",
+    'contact.name.label': 'Nom',
+    'contact.name.placeholder': 'Ton nom',
+    'contact.message.label': 'Message',
+    'contact.message.placeholder': 'Ton message...',
+    'contact.submit': 'Envoyer le message',
+    'contact.sending': 'Envoi en cours...',
+    'contact.success': 'Message envoyé ! Je te répondrai rapidement.',
+    'contact.error': "Erreur lors de l'envoi. Réessaie ou contacte-moi par email.",
+    'contact.cooldown': 'Merci de patienter encore ${remaining} minute(s).',
+    'contact.copied': 'Copié !',
+    'footer.text': 'Fait avec <span class="accent">♥</span> par Lucas Barabas — <span id="year"></span>',
+    'roles': ['Étudiant en informatique', 'Développeur web', 'Passionné de code'],
+    'code.role': '"Étudiant en informatique"',
+    'code.p1': '"développement web"',
+    'code.p2': '"programmation"',
+    'code.p3': '"réseaux"',
+  },
+  en: {
+    'nav.about': 'About',
+    'nav.skills': 'Skills',
+    'nav.projects': 'Projects',
+    'nav.contact': 'Contact',
+    'hero.greeting': "Hi, I'm",
+    'hero.desc': 'Computer Science student passionate about software development and building applications.',
+    'hero.cta.projects': 'See my projects',
+    'hero.cta.contact': 'Contact me',
+    'about.title': 'About <span class="accent">me</span>',
+    'about.p1': "I'm a Computer Science student, passionate about creating elegant and functional software solutions. My journey has allowed me to develop skills in both web development and system programming.",
+    'about.p2': "Always eager to learn new technologies, I enjoy tackling technical challenges. I'm actively looking for an apprenticeship.",
+    'about.stat1': 'Projects done',
+    'about.stat2': 'Years of code',
+    'about.stat3': 'Curiosity',
+    'about.cv': 'Request my CV',
+    'skills.title': 'My <span class="accent">Skills</span>',
+    'skills.cat.systems': 'Systems',
+    'skills.cat.tools': 'Tools',
+    'skills.cat.concepts': 'Concepts',
+    'projects.title': 'My <span class="accent">Projects</span>',
+    'project.cartolidar.desc': 'Indoor mapping robot equipped with a 360° LIDAR sensor to detect obstacles and map spaces. Controllable via a mobile app or predefined programs, with WiFi data transmission.',
+    'project.audit.desc': 'Serious game where the player acts as an auditor exploring a university campus to gather information and complete an audit mission. NPC dialogue system, multiple explorable areas and progression-based scoring.',
+    'project.cta.text': 'Want to see more projects?',
+    'project.cta.btn': 'See my GitHub',
+    'contact.title': 'Con<span class="accent">tact</span>',
+    'contact.intro': 'Available for an internship, apprenticeship or just to discuss a project. Feel free to reach out!',
+    'contact.name.label': 'Name',
+    'contact.name.placeholder': 'Your name',
+    'contact.message.label': 'Message',
+    'contact.message.placeholder': 'Your message...',
+    'contact.submit': 'Send message',
+    'contact.sending': 'Sending...',
+    'contact.success': "Message sent! I'll get back to you shortly.",
+    'contact.error': 'Error sending message. Try again or contact me by email.',
+    'contact.cooldown': 'Please wait ${remaining} more minute(s).',
+    'contact.copied': 'Copied!',
+    'footer.text': 'Made with <span class="accent">♥</span> by Lucas Barabas — <span id="year"></span>',
+    'roles': ['Computer Science Student', 'Web Developer', 'Code Enthusiast'],
+    'code.role': '"Computer Science Student"',
+    'code.p1': '"web development"',
+    'code.p2': '"programming"',
+    'code.p3': '"networks"',
+  }
+};
+
+let currentLang = localStorage.getItem('lang') || 'fr';
+
+function applyLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  document.documentElement.lang = lang;
+
+  const t = i18n[lang];
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.dataset.i18nHtml;
+    if (t[key] !== undefined) {
+      el.innerHTML = t[key];
+      if (el.id === 'year' || el.querySelector('#year')) {
+        const yr = el.querySelector('#year') || document.getElementById('year');
+        if (yr) yr.textContent = new Date().getFullYear();
+      }
+    }
+  });
+
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.dataset.i18nPlaceholder;
+    if (t[key] !== undefined) el.placeholder = t[key];
+  });
+
+  document.getElementById('lang-toggle').textContent = lang === 'fr' ? 'EN' : 'FR';
+
+  // Reset typed animation with new roles
+  roleIndex = 0;
+  charIndex = 0;
+  isDeleting = false;
+  typedEl.textContent = '';
+
+  // Re-init year in footer
+  const yr = document.getElementById('year');
+  if (yr) yr.textContent = new Date().getFullYear();
+}
+
+document.getElementById('lang-toggle').addEventListener('click', () => {
+  applyLang(currentLang === 'fr' ? 'en' : 'fr');
+});
+
+// ===== NAVBAR SCROLL + PROGRESS BAR =====
 const navbar = document.getElementById('navbar');
 const progressBar = document.getElementById('progress-bar');
 window.addEventListener('scroll', () => {
@@ -7,41 +146,34 @@ window.addEventListener('scroll', () => {
   progressBar.style.width = `${scrolled * 100}%`;
 });
 
-// Typed text animation
-const roles = [
-  'Étudiant en informatique',
-  'Développeur web',
-  'Passionné de code',
-];
+// ===== TYPED TEXT =====
+let roles = i18n[currentLang].roles;
 let roleIndex = 0;
 let charIndex = 0;
 let isDeleting = false;
 const typedEl = document.querySelector('.typed-text');
 
 function type() {
-  const current = roles[roleIndex];
+  roles = i18n[currentLang].roles;
+  const current = roles[roleIndex % roles.length];
   if (isDeleting) {
     typedEl.textContent = current.slice(0, --charIndex);
   } else {
     typedEl.textContent = current.slice(0, ++charIndex);
   }
-
   let delay = isDeleting ? 50 : 90;
-
   if (!isDeleting && charIndex === current.length) {
-    delay = 2000;
-    isDeleting = true;
+    delay = 2000; isDeleting = true;
   } else if (isDeleting && charIndex === 0) {
     isDeleting = false;
     roleIndex = (roleIndex + 1) % roles.length;
     delay = 400;
   }
-
   setTimeout(type, delay);
 }
 type();
 
-// Burger menu
+// ===== BURGER MENU =====
 const burger = document.querySelector('.burger');
 const navLinks = document.querySelector('.nav-links');
 burger.addEventListener('click', () => {
@@ -57,7 +189,7 @@ navLinks.querySelectorAll('a').forEach(link => {
   });
 });
 
-// Intersection Observer — scroll animations
+// ===== SCROLL ANIMATIONS =====
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -68,73 +200,78 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.12 });
 
-// Section titles
 document.querySelectorAll('.section-title').forEach(el => {
-  el.classList.add('fade-in');
-  observer.observe(el);
+  el.classList.add('fade-in'); observer.observe(el);
 });
 
-// About — avatar glisse depuis la gauche, texte depuis la droite
 const avatar = document.querySelector('.about-avatar');
 const aboutText = document.querySelector('.about-text');
 if (avatar) { avatar.classList.add('fade-in-left'); observer.observe(avatar); }
 if (aboutText) { aboutText.classList.add('fade-in-right'); observer.observe(aboutText); }
 
-// Stats en cascade
 document.querySelectorAll('.stat').forEach((el, i) => {
   el.classList.add('fade-in');
   el.style.transitionDelay = `${i * 0.12}s`;
   observer.observe(el);
 });
 
-// Compétences en cascade
 document.querySelectorAll('.skill-category').forEach((el, i) => {
   el.classList.add('fade-in');
   el.style.transitionDelay = `${i * 0.1}s`;
   observer.observe(el);
 });
 
-// Projets en cascade
 document.querySelectorAll('.project-card').forEach((el, i) => {
   el.classList.add('fade-in');
   el.style.transitionDelay = `${i * 0.12}s`;
   observer.observe(el);
 });
 
-// Contact
-document.querySelector('.contact-intro')?.classList.add('fade-in');
-document.querySelector('.contact-intro') && observer.observe(document.querySelector('.contact-intro'));
-document.querySelector('.contact-form')?.classList.add('fade-in');
-document.querySelector('.contact-form') && observer.observe(document.querySelector('.contact-form'));
-document.querySelector('.contact-links')?.classList.add('fade-in-right');
-document.querySelector('.contact-links') && observer.observe(document.querySelector('.contact-links'));
+['.contact-intro', '.contact-form'].forEach(sel => {
+  const el = document.querySelector(sel);
+  if (el) { el.classList.add('fade-in'); observer.observe(el); }
+});
+const contactLinks = document.querySelector('.contact-links');
+if (contactLinks) { contactLinks.classList.add('fade-in-right'); observer.observe(contactLinks); }
 
-// Contact form — Formspree
-const FORMSPREE_ID = 'xykvawgp'; 
+// ===== ACTIVE NAV =====
+const sections = document.querySelectorAll('section[id]');
+const navAnchors = document.querySelectorAll('.nav-links a');
 
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navAnchors.forEach(a => a.classList.remove('active'));
+      const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { threshold: 0.4 });
+
+sections.forEach(s => sectionObserver.observe(s));
+
+// ===== CONTACT FORM =====
+const FORMSPREE_ID = 'xykvawgp';
 const contactForm = document.getElementById('contact-form');
 const submitBtn = document.getElementById('submit-btn');
 const formStatus = document.getElementById('form-status');
-
-const COOLDOWN_MS = 10 * 60 * 1000; // 10 minutes
+const COOLDOWN_MS = 10 * 60 * 1000;
 
 contactForm.addEventListener('submit', async function (e) {
   e.preventDefault();
-
-  // Honeypot check
   if (this.querySelector('[name="_gotcha"]').value) return;
 
-  // Cooldown check
+  const t = i18n[currentLang];
   const lastSent = localStorage.getItem('lastContactSent');
   if (lastSent && Date.now() - parseInt(lastSent) < COOLDOWN_MS) {
     const remaining = Math.ceil((COOLDOWN_MS - (Date.now() - parseInt(lastSent))) / 60000);
     formStatus.className = 'form-status error';
-    formStatus.textContent = `Merci de patienter encore ${remaining} minute(s) avant d'envoyer un autre message.`;
+    formStatus.textContent = t['contact.cooldown'].replace('${remaining}', remaining);
     return;
   }
 
   submitBtn.disabled = true;
-  submitBtn.textContent = 'Envoi en cours...';
+  submitBtn.textContent = t['contact.sending'];
   formStatus.className = 'form-status';
   formStatus.textContent = '';
 
@@ -144,36 +281,33 @@ contactForm.addEventListener('submit', async function (e) {
       headers: { 'Accept': 'application/json' },
       body: new FormData(contactForm),
     });
-
     if (res.ok) {
       localStorage.setItem('lastContactSent', Date.now());
       formStatus.className = 'form-status success';
-      formStatus.textContent = 'Message envoyé ! Je te répondrai rapidement.';
+      formStatus.textContent = t['contact.success'];
       contactForm.reset();
-    } else {
-      throw new Error();
-    }
+    } else throw new Error();
   } catch {
     formStatus.className = 'form-status error';
-    formStatus.textContent = 'Erreur lors de l\'envoi. Réessaie ou contacte-moi par email.';
+    formStatus.textContent = t['contact.error'];
   } finally {
     submitBtn.disabled = false;
-    submitBtn.textContent = 'Envoyer le message';
+    submitBtn.textContent = t['contact.submit'];
   }
 });
 
-// Copy email to clipboard
+// ===== COPY EMAIL =====
 document.querySelector('a[href^="mailto:"].contact-link').addEventListener('click', function (e) {
   e.preventDefault();
   navigator.clipboard.writeText('lucasbarabas355@gmail.com').then(() => {
     const span = this.querySelector('span');
     const original = span.textContent;
-    span.textContent = 'Copié !';
+    span.textContent = i18n[currentLang]['contact.copied'];
     setTimeout(() => { span.textContent = original; }, 2000);
   });
 });
 
-// Animated counters — store target in data attribute to always start from 0
+// ===== ANIMATED COUNTERS =====
 document.querySelectorAll('.stat-number').forEach(el => {
   const text = el.textContent.trim();
   const num = parseInt(text);
@@ -207,8 +341,7 @@ const counterObserver = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.stat-number[data-target]').forEach(el => counterObserver.observe(el));
 
-
-// Clickable project cards
+// ===== CLICKABLE PROJECT CARDS =====
 document.querySelectorAll('.project-card:not(.project-card-cta)').forEach(card => {
   const githubLink = card.querySelector('.icon-link[aria-label="GitHub"]');
   if (!githubLink) return;
@@ -218,21 +351,8 @@ document.querySelectorAll('.project-card:not(.project-card-cta)').forEach(card =
   });
 });
 
-// Footer year
+// ===== FOOTER YEAR =====
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Active nav link on scroll
-const sections = document.querySelectorAll('section[id]');
-const navAnchors = document.querySelectorAll('.nav-links a');
-
-const sectionObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      navAnchors.forEach(a => a.style.color = '');
-      const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
-      if (active) active.style.color = 'var(--text)';
-    }
-  });
-}, { threshold: 0.4 });
-
-sections.forEach(s => sectionObserver.observe(s));
+// Apply saved language on load
+if (currentLang === 'en') applyLang('en');
