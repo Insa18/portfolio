@@ -913,8 +913,12 @@ footer {
   25% { transform: translateY(-5px) rotate(-14deg); }
   75% { transform: translateY(-5px) rotate(14deg); }
 }
+@keyframes petRainbow {
+  from { filter: hue-rotate(0deg)   drop-shadow(0 6px 24px rgba(124,106,247,0.7)); }
+  to   { filter: hue-rotate(360deg) drop-shadow(0 6px 24px rgba(124,106,247,0.7)); }
+}
 .pet.dancing {
-  animation: petDance 0.35s ease infinite !important;
+  animation: petDance 0.35s ease infinite, petRainbow 0.8s linear infinite !important;
 }
 
 .pet.sleeping {
