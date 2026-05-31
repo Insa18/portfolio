@@ -416,7 +416,7 @@ const petMessages = {
     '// TODO: finir ça plus tard',
     'chmod 777... attends non.',
     'Ctrl+Z, Ctrl+Z, Ctrl+Z...',
-    'Tu veux voir mes projets ? ↑',
+    'Tu veux voir mes projets ?',
     'Il est ' + new Date().getHours() + 'h, tu dors pas ?',
   ],
   en: [
@@ -567,12 +567,14 @@ function triggerEasterEgg() {
   }, 3000);
 }
 
-// Scroll surprise
+// Scroll surprise (desktop only — touch scroll is naturally fast)
+const isTouchDevice = window.matchMedia('(hover: none)').matches;
 let lastSY = window.scrollY;
 let lastST = Date.now();
 let surpriseTimer = null;
 
 window.addEventListener('scroll', () => {
+  if (isTouchDevice) return;
   const now = Date.now();
   const dy = Math.abs(window.scrollY - lastSY);
   const dt = (now - lastST) || 1;
