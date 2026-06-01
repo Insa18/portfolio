@@ -385,15 +385,19 @@ document.addEventListener('mousemove', (e) => {
   if (!pet) return;
   if (typeof petState !== 'undefined' && petState !== 'normal') return;
   const rect = pet.getBoundingClientRect();
-  [['pupil-left', 19], ['pupil-right', 51]].forEach(([id, baseCx]) => {
+  [['pupil-left', 'highlight-left', 19], ['pupil-right', 'highlight-right', 51]].forEach(([id, hlId, baseCx]) => {
     const pupil = document.getElementById(id);
+    const hl = document.getElementById(hlId);
     if (!pupil) return;
     const eyeX = rect.left + (baseCx / 70) * rect.width;
     const eyeY = rect.top + (12.5 / 82) * rect.height;
     const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
     const dist = 4;
-    pupil.setAttribute('cx', baseCx + Math.cos(angle) * dist);
-    pupil.setAttribute('cy', 12.5 + Math.sin(angle) * dist);
+    const px = baseCx + Math.cos(angle) * dist;
+    const py = 12.5 + Math.sin(angle) * dist;
+    pupil.setAttribute('cx', px);
+    pupil.setAttribute('cy', py);
+    if (hl) { hl.setAttribute('cx', px - 2.5); hl.setAttribute('cy', py - 2.5); }
   });
 });
 
@@ -568,11 +572,12 @@ function triggerEasterEgg() {
 }
 
 // Scroll surprise (desktop only — disabled on touch-capable devices)
-const hasTouchCapability = navigator.maxTouchPoints > 0 || 'ontouchstart' in window;
+const hasTouchCapability = !window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
 let lastSY = window.scrollY;
 let lastST = Date.now();
 let surpriseTimer = null;
+let lastSurpriseTime = 0;
 
 window.addEventListener('scroll', () => {
   if (hasTouchCapability) return;
@@ -583,7 +588,9 @@ window.addEventListener('scroll', () => {
   lastSY = window.scrollY;
   lastST = now;
 
-  if (speed > 1.5 && petState === 'normal') {
+  const cooldown = 5000 + Math.random() * 5000;
+  if (speed > 1.5 && petState === 'normal' && (now - lastSurpriseTime) > cooldown) {
+    lastSurpriseTime = now;
     setPetState('surprised');
     showBubble(currentLang === 'fr' ? 'Woah, doucement !' : 'Woah, slow down!');
     clearTimeout(surpriseTimer);
