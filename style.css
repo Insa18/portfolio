@@ -1035,7 +1035,7 @@ footer {
   .burger.active span:nth-child(2) { opacity: 0; }
   .burger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
   .projects-grid { grid-template-columns: 1fr; }
-  .skills-grid { grid-template-columns: 1fr 1fr; }
+  .skills-grid { grid-template-columns: 1fr; }
   .skill-category { grid-column: span 1 !important; }
 
   /* Sections padding réduit */
