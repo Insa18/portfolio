@@ -48,7 +48,7 @@ const i18n = {
     'timeline.present': 'présent',
     'timeline.current': 'En cours',
     'timeline.but.title': 'BUT Informatique',
-    'timeline.but.school': '2ème année',
+    'timeline.but.school': '3ème année',
     'timeline.but.desc': "Formation universitaire en informatique couvrant le développement logiciel, les bases de données, les réseaux et la gestion de projets.",
     'code.role': '"Étudiant en informatique"',
     'code.p1': '"développement web"',
