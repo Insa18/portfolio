@@ -103,7 +103,7 @@ const i18n = {
     'timeline.present': 'present',
     'timeline.current': 'Ongoing',
     'timeline.but.title': 'Bachelor in Computer Science',
-    'timeline.but.school': '2nd year',
+    'timeline.but.school': '3rd year',
     'timeline.but.desc': 'University-level program covering software development, databases, networking and project management.',
     'code.role': '"Computer Science Student"',
     'code.p1': '"web development"',
@@ -405,7 +405,7 @@ document.addEventListener('mousemove', (e) => {
 document.getElementById('year').textContent = new Date().getFullYear();
 
 // Apply saved language on load
-if (currentLang === 'en') applyLang('en');
+applyLang(currentLang);
 
 // ===== PET INTERACTIONS =====
 let petState = 'normal';
