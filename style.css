@@ -466,6 +466,21 @@ img {
   width: 12px;
   height: 12px;
   border-radius: 50%;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: transform var(--transition), filter var(--transition);
+}
+
+.dot:hover,
+.dot:focus-visible {
+  transform: scale(1.2);
+  filter: brightness(1.15);
+}
+
+.dot:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 3px;
 }
 
 .dot.red {
@@ -493,6 +508,16 @@ img {
   font-size: 0.85rem;
   line-height: 1.8;
   overflow: hidden;
+}
+
+.code-card.is-closed .code-body,
+.code-card.is-minimized .code-body {
+  display: none;
+}
+
+.code-card.is-closed {
+  opacity: 0.55;
+  transform: scale(0.96);
 }
 
 .code-body code {

@@ -71,7 +71,12 @@
     <div class="hero-visual">
       <div class="code-card">
         <div class="code-card-header">
-          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+          <button class="dot red" type="button" aria-label="Fermer la carte de code" aria-pressed="false"
+            title="Fermer ou rouvrir la carte"></button>
+          <button class="dot yellow" type="button" aria-label="Réduire la carte de code" aria-pressed="false"
+            title="Réduire ou développer la carte"></button>
+          <button class="dot green" type="button" aria-label="Rouvrir la carte de code"
+            title="Rouvrir la carte"></button>
           <span class="code-filename">about.js</span>
         </div>
         <pre class="code-body"><code><span class="kw">const</span> <span class="var">lucas</span> = {

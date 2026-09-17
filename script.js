@@ -369,6 +369,34 @@ const counterObserver = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.stat-number[data-target]').forEach(el => counterObserver.observe(el));
 
+// ===== CODE CARD CONTROLS =====
+const codeCard = document.querySelector('.code-card');
+if (codeCard) {
+  const redButton = codeCard.querySelector('.dot.red');
+  const yellowButton = codeCard.querySelector('.dot.yellow');
+  const greenButton = codeCard.querySelector('.dot.green');
+
+  redButton.addEventListener('click', () => {
+    if (codeCard.classList.contains('is-closed')) return;
+    codeCard.classList.add('is-closed');
+    redButton.setAttribute('aria-pressed', 'true');
+    redButton.setAttribute('aria-label', 'Carte de code fermée');
+  });
+
+  yellowButton.addEventListener('click', () => {
+    const isMinimized = codeCard.classList.toggle('is-minimized');
+    yellowButton.setAttribute('aria-pressed', isMinimized);
+    yellowButton.setAttribute('aria-label', isMinimized
+      ? 'Développer la carte de code' : 'Réduire la carte de code');
+  });
+
+  greenButton.addEventListener('click', () => {
+    codeCard.classList.remove('is-closed', 'is-minimized');
+    redButton.setAttribute('aria-pressed', 'false');
+    yellowButton.setAttribute('aria-pressed', 'false');
+  });
+}
+
 // ===== CLICKABLE PROJECT CARDS =====
 document.querySelectorAll('.project-card:not(.project-card-cta)').forEach(card => {
   const githubLink = card.querySelector('.icon-link[aria-label="GitHub"]');
